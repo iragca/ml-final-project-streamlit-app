@@ -68,7 +68,7 @@ def main():
         )
 
     eligibility = st.text_input(
-        "Elegibility",
+        "Eligibility",
         "Career Service (Professional) First Level",
         placeholder="Career Service (Professional) First Level",
     )
