@@ -1,0 +1,13 @@
+dotenv>=0.9.9
+joblib>=1.5.0
+matplotlib>=3.10.3
+polars>=1.29.0
+scikit-learn>=1.6.1
+shap>=0.47.2
+streamlit>=1.45.0
+torch>=2.7.0
+transformers>=4.51.3
+
+loguru>=0.7.3
+tqdm>=4.67.1
+-e .
