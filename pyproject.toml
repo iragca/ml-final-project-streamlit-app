@@ -1,0 +1,27 @@
+[project]
+name = "ml-final-project-streamlit-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "joblib>=1.5.0",
+    "scikit-learn>=1.6.1",
+    "streamlit>=1.45.0",
+]
+
+[dependency-groups]
+dev = [
+    "loguru>=0.7.3",
+    "tqdm>=4.67.1",
+]
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+)/
+'''
