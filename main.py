@@ -96,47 +96,47 @@ def main():
     st.divider()
 
     if st.button("Predict", type="primary", use_container_width=True):
-
-        prediction = ""
-        prediction = inference(
-            position_title=position,
-            agency=agency,
-            education=education_level,
-            experience=experience,
-            eligibility=eligibility,
-            knn_model=KNN_MODEL,
-            bert_tokenizer=tokenizer,
-            bert_model=model,
-        ).ravel()
-
-        percentile = calculate_percentile(
-            RAW_DATA, "MonthlySalary", prediction[0]
-        )
-
-        with st.expander(
-            f"PHP {float(prediction[0]):,.2f} | Percentile: {percentile:.2f}%",
-            expanded=True,
-        ):
-            fig, ax = plt.subplots()
-            plot_shap_waterfall(
+        with st.spinner("Calculating..."):
+            prediction = ""
+            prediction = inference(
                 position_title=position,
                 agency=agency,
                 education=education_level,
                 experience=experience,
                 eligibility=eligibility,
-                explainer=explainer,
-                X_test=X_TEST,
+                knn_model=KNN_MODEL,
                 bert_tokenizer=tokenizer,
                 bert_model=model,
-                feature_names=[
-                    "Position Title",
-                    "Agency",
-                    "Education",
-                    "Experience",
-                    "Eligibility",
-                ],
+            ).ravel()
+
+            percentile = calculate_percentile(
+                RAW_DATA, "MonthlySalary", prediction[0]
             )
-            st.pyplot(fig, use_container_width=True)
+
+            with st.expander(
+                f"PHP {float(prediction[0]):,.2f} | Percentile: {percentile:.2f}%",
+                expanded=True,
+            ):
+                fig, ax = plt.subplots()
+                plot_shap_waterfall(
+                    position_title=position,
+                    agency=agency,
+                    education=education_level,
+                    experience=experience,
+                    eligibility=eligibility,
+                    explainer=explainer,
+                    X_test=X_TEST,
+                    bert_tokenizer=tokenizer,
+                    bert_model=model,
+                    feature_names=[
+                        "Position Title",
+                        "Agency",
+                        "Education",
+                        "Experience",
+                        "Eligibility",
+                    ],
+                )
+                st.pyplot(fig, use_container_width=True)
 
 
 if __name__ == "__main__":
