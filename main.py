@@ -18,11 +18,21 @@ def main():
     st.divider()
 
     with st.sidebar:
-
-        st.header("About the dataset")
+        st.title("About")
         st.markdown(
-            "Gathered from the website Civil Service Commission of the Philippines. "
-            "These are job listings from Nov 2024 to May 2025. "
+            "This is a [web app](https://github.com/iragca/ml-final-project-streamlit-app) that predicts monthly salaries (PHP) based on job listing features "
+            "using the original uncased **BERT** model from Google, without any fine-tuning."
+        )
+        st.markdown(
+            "It uses a **K-Nearest Neighbors (KNN) regressor** "
+            "with 11 neighbors and the Manhattan distance metric. "
+            "The model achieves an *R²* score of **0.874**."
+        )
+
+        st.header("Dataset")
+        st.markdown(
+            "Gathered from the [website](https://csc.gov.ph/career/) of the Civil Service Commission of the Philippines. "
+            "These are job listings from November 2024 to May 2025. "
         )
         st.markdown(
             "**Hover and click download to download the training dataset.**"
@@ -30,7 +40,7 @@ def main():
         st.dataframe(RAW_DATA.sample(5))
         st.subheader("Authors")
         st.write("Chris Irag and others, Group 2, DS3A ")
-        st.caption("Coursework for DS322 - Machine Learning")
+        st.caption("[Coursework for DS322 - Machine Learning](https://github.com/iragca/ml-final-project)")
 
     col1, col2 = st.columns(2)
 
@@ -64,7 +74,9 @@ def main():
     )
 
     st.markdown("Example of a job listing:")
-    experience_col_config = st.column_config.NumberColumn(label="Experience (Years)", width=30)
+    experience_col_config = st.column_config.NumberColumn(
+        label="Experience (Years)", width=30
+    )
     st.dataframe(
         RAW_DATA.select(
             [
