@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 from src.config import KNN_MODEL, X_TEST, RAW_DATA
 from src.inference import inference, plot_shap_waterfall
 from src.models_init import init_shap, load_bert_model
+from src.utils import calculate_percentile
 
 # Load models
 tokenizer, model = load_bert_model()
 explainer = init_shap()
-
 
 def main():
     st.title("Should I be hired by the government? 🇵🇭")
@@ -19,20 +19,14 @@ def main():
     with st.sidebar:
 
         st.header("About the dataset")
-        st.write(
+        st.markdown(
             "Gathered from the website Civil Service Commission of the Philippines. "
             "These are job listings from Nov 2024 to May 2025. "
         )
-        st.dataframe(RAW_DATA.sample(5))
-        buffer = io.BytesIO()
-        RAW_DATA.write_parquet(buffer)
-        buffer.seek(0)
-        st.download_button(
-            label="Download the training dataset",
-            data=buffer,
-            file_name="civilservicecommission-unclean-training-data.parquet",
-            mime="application/octet-stream",
+        st.markdown(
+            "**Hover and click download to download the training dataset.**"
         )
+        st.dataframe(RAW_DATA.sample(5))
         st.subheader("Authors")
         st.write("Chris Irag and others, Group 2, DS3A ")
         st.caption("Coursework for DS322 - Machine Learning")
@@ -49,7 +43,7 @@ def main():
         )
     with col2:
         education_level = st.text_input(
-            "Education level", placeholder="Bachelor's Degree"
+            "Education", placeholder="Bachelor's Degree"
         )
         experience = st.number_input(
             "Years of experience",
@@ -78,8 +72,9 @@ def main():
             bert_model=model,
         ).ravel()
 
-        with st.expander(f"PHP {float(prediction[0]):,.2f}", expanded=True):
+        percentile = calculate_percentile(RAW_DATA, 'MonthlySalary', prediction[0])
 
+        with st.expander(f"PHP {float(prediction[0]):,.2f} | Percentile: {percentile:.2f}%", expanded=True):
             fig, ax = plt.subplots()
             plot_shap_waterfall(
                 position_title=position,
