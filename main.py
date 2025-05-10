@@ -1,7 +1,9 @@
+import io
+
 import streamlit as st
 
 import matplotlib.pyplot as plt
-from src.config import X_TEST, KNN_MODEL
+from src.config import KNN_MODEL, X_TEST, RAW_DATA
 from src.inference import inference, plot_shap_waterfall
 from src.models_init import init_shap, load_bert_model
 
@@ -13,6 +15,28 @@ explainer = init_shap()
 def main():
     st.title("Should I be hired by the government? 🇵🇭")
     st.divider()
+
+    with st.sidebar:
+
+        st.header("About the dataset")
+        st.write(
+            "Gathered from the website Civil Service Commission of the Philippines. "
+            "These are job listings from Nov 2024 to May 2025. "
+        )
+        st.dataframe(RAW_DATA.sample(5))
+        buffer = io.BytesIO()
+        RAW_DATA.write_parquet(buffer)
+        buffer.seek(0)
+        st.download_button(
+            label="Download the training dataset",
+            data=buffer,
+            file_name="civilservicecommission-unclean-training-data.parquet",
+            mime="application/octet-stream",
+        )
+        st.subheader("Authors")
+        st.write("Chris Irag and others, Group 2, DS3A ")
+        st.caption("Coursework for DS322 - Machine Learning")
+
     col1, col2 = st.columns(2)
 
     with col1:
