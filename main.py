@@ -12,6 +12,7 @@ from src.utils import calculate_percentile
 tokenizer, model = load_bert_model()
 explainer = init_shap()
 
+
 def main():
     st.title("Should I be hired by the government? 🇵🇭")
     st.divider()
@@ -35,15 +36,18 @@ def main():
 
     with col1:
         position = st.text_input(
-            "Enter your desired position", placeholder="Data Scientist"
+            "Enter your desired position",
+            "Data Scientist",
+            placeholder="Data Scientist",
         )
         agency = st.text_input(
             "Agency you want to work for",
+            "Department of Education",
             placeholder="Department of Education",
         )
     with col2:
         education_level = st.text_input(
-            "Education", placeholder="Bachelor's Degree"
+            "Education", "Bachelor's Degree", placeholder="Bachelor's Degree"
         )
         experience = st.number_input(
             "Years of experience",
@@ -55,10 +59,31 @@ def main():
 
     eligibility = st.text_input(
         "Elegibility",
-        placeholder="Career Service (Subprofessional) First Level",
+        "Career Service (Professional) First Level",
+        placeholder="Career Service (Professional) First Level",
     )
 
-    if st.button("Predict", type="primary"):
+    st.markdown("Example of a job listing:")
+    experience_col_config = st.column_config.NumberColumn(label="Experience (Years)", width=30)
+    st.dataframe(
+        RAW_DATA.select(
+            [
+                "Position Title",
+                "Agency",
+                "Education",
+                "experience_years",
+                "Eligibility",
+            ]
+        ).sample(1),
+        height=50,
+        column_config={
+            "experience_years": experience_col_config,
+        },
+    )
+    st.button("Another example", use_container_width=True)
+    st.divider()
+
+    if st.button("Predict", type="primary", use_container_width=True):
 
         prediction = ""
         prediction = inference(
@@ -72,9 +97,14 @@ def main():
             bert_model=model,
         ).ravel()
 
-        percentile = calculate_percentile(RAW_DATA, 'MonthlySalary', prediction[0])
+        percentile = calculate_percentile(
+            RAW_DATA, "MonthlySalary", prediction[0]
+        )
 
-        with st.expander(f"PHP {float(prediction[0]):,.2f} | Percentile: {percentile:.2f}%", expanded=True):
+        with st.expander(
+            f"PHP {float(prediction[0]):,.2f} | Percentile: {percentile:.2f}%",
+            expanded=True,
+        ):
             fig, ax = plt.subplots()
             plot_shap_waterfall(
                 position_title=position,
