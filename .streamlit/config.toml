@@ -1,9 +1,9 @@
 [client]
 showErrorDetails = "none"
 
-[theme]
-primaryColor = "#F63366"
-backgroundColor = "black"
+# [theme]
+# primaryColor = "#F63366"
+# backgroundColor = "black"
 
 [browser]
 gatherUsageStats = false
