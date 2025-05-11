@@ -35,7 +35,8 @@ def main():
             "These are job listings from November 2024 to May 2025. "
         )
         st.markdown(
-            "**Download the [training dataset found in our GitHub repo](https://github.com/iragca/ml-final-project/raw/refs/heads/master/data/processed/CivilServiceCommission/civilservicecommission.parquet).**"
+            "**Download the [raw](https://github.com/iragca/ml-final-project/raw/refs/heads/master/data/processed/CivilServiceCommission/civilservicecommission.parquet) "
+            "or [training](https://github.com/iragca/ml-final-project/raw/refs/heads/master/data/processed/CivilServiceCommission/civilservicecommission-unclean-training-data.parquet) datasets found in our GitHub repo.**"
         )
         st.dataframe(RAW_DATA.sample(5))
         st.subheader("Authors")
