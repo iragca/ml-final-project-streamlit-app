@@ -18,15 +18,10 @@ RUN git clone https://github.com/iragca/ml-final-project-streamlit-app.git
 
 WORKDIR /app/ml-final-project-streamlit-app
 
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    python3-dev
-RUN pip install uv
-RUN uv sync
+RUN pip3 install -r requirements.txt
 
 EXPOSE 7860
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-ENTRYPOINT ["uv", "run", "streamlit", "run", "main.py", "--server.port=7860", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=7860", "--server.address=0.0.0.0"]

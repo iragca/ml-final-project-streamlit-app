@@ -24,15 +24,15 @@ def main():
             "using the original uncased **BERT** model from Google, without any fine-tuning."
         )
         st.markdown(
-            "It uses a **K-Nearest Neighbors (KNN) regressor** "
-            "with 11 neighbors and the Manhattan distance metric. "
-            "The model achieves an *R²* score of **0.874**."
+            "It uses a **Random Forest regressor** "
+            "with 50 *n estimators* and 20 **max depth** for branches. "
+            "The model achieves an *R²* score of **0.9486**."
         )
 
         st.header("Dataset")
         st.markdown(
             "Gathered from the [website](https://csc.gov.ph/career/) of the Civil Service Commission of the Philippines. "
-            "These are job listings from November 2024 to May 2025. "
+            "These are job listings from November 2024 to April 2025. "
         )
         st.markdown(
             "**Download the [raw](https://github.com/iragca/ml-final-project/raw/refs/heads/master/data/processed/CivilServiceCommission/civilservicecommission-2.parquet) "
@@ -97,6 +97,20 @@ def main():
     st.divider()
 
     if st.button("Predict", type="primary", use_container_width=True):
+        # Validation
+        if not position:
+            st.error("Please enter a position title.")
+            st.stop()
+        if not agency:
+            st.error("Please enter an agency.")
+            st.stop()
+        if not education_level:
+            st.error("Please enter an education level.")
+            st.stop()
+        if not eligibility:
+            st.error("Please enter an eligibility.")
+            st.stop()
+
         with st.spinner("Calculating..."):
             prediction = ""
             prediction = inference(
