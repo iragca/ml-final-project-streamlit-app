@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip install uv
 RUN uv sync
 
-EXPOSE 8501
+EXPOSE 7860
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 

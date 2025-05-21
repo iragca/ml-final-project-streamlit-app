@@ -68,14 +68,14 @@ X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = init_data()
 @st.cache_resource
 def init_model():
     # Download the model from Hugging Face Hub
-    hf_hub_download(
+    model_path = hf_hub_download(
         repo_id="chrisandrei/civil-service-commission-ph-random-forest",
         filename="civilservicecommission-rfr-model.joblib",
         cache_dir=MODELS_DIR,
     )
 
     # Load the model
-    return joblib.load(MODELS_DIR / "civilservicecommission-rfr-model.joblib")
+    return joblib.load(model_path)
 
 
 MODEL = init_model()
