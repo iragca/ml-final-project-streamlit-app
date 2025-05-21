@@ -71,7 +71,6 @@ def init_model():
     model_path = hf_hub_download(
         repo_id="chrisandrei/civil-service-commission-ph-random-forest",
         filename="civilservicecommission-rfr-model.joblib",
-        cache_dir=MODELS_DIR,
     )
 
     # Load the model
