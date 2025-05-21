@@ -3,7 +3,7 @@ import io
 import streamlit as st
 
 import matplotlib.pyplot as plt
-from src.config import KNN_MODEL, X_TEST, RAW_DATA
+from src.config import MODEL, X_TEST, RAW_DATA
 from src.inference import inference, plot_shap_waterfall
 from src.models_init import init_shap, load_bert_model
 from src.utils import calculate_percentile
@@ -105,7 +105,7 @@ def main():
                 education=education_level,
                 experience=experience,
                 eligibility=eligibility,
-                knn_model=KNN_MODEL,
+                MODEL=MODEL,
                 bert_tokenizer=tokenizer,
                 bert_model=model,
             ).ravel()

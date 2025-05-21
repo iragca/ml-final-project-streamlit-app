@@ -2,9 +2,10 @@ import os
 from pathlib import Path
 
 import joblib
-import streamlit as st
 import polars as pl
+import streamlit as st
 from dotenv import load_dotenv
+from huggingface_hub import hf_hub_download
 from loguru import logger
 from sklearn.model_selection import train_test_split
 
@@ -62,4 +63,19 @@ MODELS_DIR, MPL_STYLE_DIR, RAW_DATA, DATA_DIR, EXTERNAL_DATA_DIR = (
 )
 
 X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = init_data()
-KNN_MODEL = joblib.load(MODELS_DIR / "civilservicecommission-knn-model.joblib")
+
+
+@st.cache_resource
+def init_model():
+    # Download the model from Hugging Face Hub
+    hf_hub_download(
+        repo_id="chrisandrei/civil-service-commission-ph-random-forest",
+        filename="civilservicecommission-rfr-model.joblib",
+        cache_dir=MODELS_DIR,
+    )
+
+    # Load the model
+    return joblib.load(MODELS_DIR / "civilservicecommission-rfr-model.joblib")
+
+
+MODEL = init_model()

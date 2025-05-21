@@ -145,7 +145,7 @@ def inference(
     education: str,
     experience: str,
     eligibility: str,
-    knn_model,
+    MODEL,
     bert_tokenizer,
     bert_model,
 ) -> float:
@@ -186,4 +186,4 @@ def inference(
         ]
     ).reshape(1, -1)
 
-    return knn_model.predict(input_embeddings)
+    return MODEL.predict(input_embeddings)
