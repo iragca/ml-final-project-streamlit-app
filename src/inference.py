@@ -41,7 +41,7 @@ def get_embeddings(
     eligibility: str,
     bert_tokenizer,
     bert_model,
-) -> float:
+) -> np.ndarray:
     """
     Predict the salary of a job posting based on its attributes.
 
@@ -53,7 +53,7 @@ def get_embeddings(
             eligibility (str): The eligibility requirements for the position.
 
     Returns:
-            float: The predicted salary for the job posting.
+            np.ndarray: The input embeddings for the model.
     """
     cls_embedding = get_cls_embedding(
         position_title, bert_tokenizer, bert_model
