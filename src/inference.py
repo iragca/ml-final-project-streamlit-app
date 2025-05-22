@@ -91,9 +91,9 @@ def plot_shap_waterfall(
     feature_names: list,
     bert_tokenizer,
     bert_model,
-) -> float:
+) -> None:
 
-    input_embeddings = get_embeddings(
+    input_embeddings: np.ndarray = get_embeddings(
         position_title,
         agency,
         education,
