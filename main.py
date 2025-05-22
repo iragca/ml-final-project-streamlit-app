@@ -167,7 +167,7 @@ def main():
                     "where the _base value_ is the **average** prediction of the model, a.k.a the expected value denoted as $E[f(X)]$"
                 )
                 st.markdown(
-                    "SHAP values for a feature are computed by averaging the change in model output when a combinations of input and random sample data are simulated."
+                    "The SHAP value for a feature is computed by averaging the change in model output when combinations of the input and some random sample of the dataset are simulated."
                     " These combinations are done in such a way that doesn't ignore dependencies between features."
                 )
 
