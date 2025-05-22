@@ -164,7 +164,7 @@ def main():
                     "\n\n"
                     "Predicted Salary = _base value_ + $\\sum$ SHAP values"
                     "\n\n"
-                    "where the _base value_ is the average, a.k.a the expected value denoted as $E[f(X)]$"
+                    "where the _base value_ is the **average** prediction of the model, a.k.a the expected value denoted as $E[f(X)]$"
                 )
                 st.markdown(
                     "SHAP values for a feature are computed by averaging the change in model output when a combinations of input and random sample data are simulated."
