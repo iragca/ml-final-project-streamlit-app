@@ -41,7 +41,9 @@ def main():
         st.dataframe(RAW_DATA.sample(5))
         st.subheader("Authors")
         st.write("Chris Irag and others, Group 2, DS3A ")
-        st.caption("[Coursework for DS322 - Machine Learning](https://github.com/iragca/ml-final-project)")
+        st.caption(
+            "[Coursework for DS322 - Machine Learning](https://github.com/iragca/ml-final-project)"
+        )
 
     col1, col2 = st.columns(2)
 
@@ -152,6 +154,22 @@ def main():
                     ],
                 )
                 st.pyplot(fig, use_container_width=True)
+                st.markdown(
+                    "This is a waterfall plot of the SHAP values for the model's prediction. "
+                    "The features are listed on the left, and the SHAP values are shown on the right. "
+                    "The red bars indicate positive contributions to the prediction, while the blue bars indicate negative contributions."
+                )
+                st.markdown(
+                    "The monthly salary is calculate as "
+                    "\n\n"
+                    "Predicted Salary = _base value_ + $\\sum$ SHAP values"
+                    "\n\n"
+                    "where the _base value_ is the average, a.k.a the expected value denoted as $E[f(X)]$"
+                )
+                st.markdown(
+                    "SHAP values for a feature are computed by averaging the change in model output when a combinations of input and random sample data are simulated."
+                    " These combinations are done in such a way that doesn't ignore dependencies between features."
+                )
 
 
 if __name__ == "__main__":
