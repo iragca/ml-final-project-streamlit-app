@@ -154,6 +154,8 @@ def main():
                     ],
                 )
                 st.pyplot(fig, use_container_width=True)
+
+                st.subheader("About this SHAP figure")
                 st.markdown(
                     "This is a waterfall plot of the SHAP values for the model's prediction. "
                     "The features are listed on the left, and the SHAP values are shown on the right. "
