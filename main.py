@@ -141,8 +141,7 @@ def main():
                     education=education_level,
                     experience=experience,
                     eligibility=eligibility,
-                    explainer=explainer,
-                    X_test=X_TEST,
+                    tree_explainer=explainer,
                     bert_tokenizer=tokenizer,
                     bert_model=model,
                     feature_names=[
@@ -162,7 +161,7 @@ def main():
                     "The red bars indicate positive contributions to the prediction, while the blue bars indicate negative contributions."
                 )
                 st.markdown(
-                    "The monthly salary is calculate as "
+                    "The monthly salary is calculated as "
                     "\n\n"
                     "Predicted Salary = _base value_ + $\\sum$ SHAP values"
                     "\n\n"

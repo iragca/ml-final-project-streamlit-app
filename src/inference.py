@@ -33,13 +33,12 @@ def get_cls_embedding(text, tokenizer, bert_model):
     return cls_embedding.sum()
 
 
-def get_shap_value(
+def get_embeddings(
     position_title: str,
     agency: str,
     education: str,
     experience: int,
     eligibility: str,
-    explainer: shap.KernelExplainer,
     bert_tokenizer,
     bert_model,
 ) -> float:
@@ -79,7 +78,7 @@ def get_shap_value(
         ]
     )
 
-    return explainer.shap_values(input_embeddings).ravel()
+    return input_embeddings
 
 
 def plot_shap_waterfall(
@@ -88,54 +87,33 @@ def plot_shap_waterfall(
     education: str,
     experience: int,
     eligibility: str,
-    explainer: shap.KernelExplainer,
-    X_test: np.ndarray,
+    tree_explainer: shap.TreeExplainer,
+    feature_names: list,
     bert_tokenizer,
     bert_model,
-    feature_names: list,
-):
-    """
-    Plot a SHAP waterfall plot for a given job posting.
+) -> float:
 
-    Args:
-        position_title (str): The title of the position.
-        agency (str): The agency offering the position.
-        education (str): The required education for the position.
-        experience (str): The required experience for the position.
-        eligibility (str): The eligibility requirements for the position.
-        explainer (shap.KernelExplainer): The SHAP explainer object.
-        X_test (np.ndarray): Test dataset.
-        feature_names (list): List of feature names.
-
-    Returns:
-        None
-    """
-    test_input = get_shap_value(
+    input_embeddings = get_embeddings(
         position_title,
         agency,
         education,
         experience,
         eligibility,
-        explainer,
         bert_tokenizer,
         bert_model,
     )
 
-    shap_val = test_input  # SHAP values for the first instance
-    base_val = explainer.expected_value  # Scalar base value
-    data_row = (
-        X_test.iloc[0] if hasattr(X_test, "iloc") else X_test[0]
-    )  # Row data
+    # Compute SHAP values
+    shap_values = tree_explainer.shap_values(input_embeddings)
 
-    # Wrap as Explanation object
+    # Explanation
     explanation = shap.Explanation(
-        values=shap_val,
-        base_values=base_val,
-        data=data_row,
+        values=shap_values,
+        base_values=tree_explainer.expected_value,
+        data=input_embeddings,
         feature_names=feature_names,
     )
-
-    # Now plot
+    # Plot SHAP values
     shap.plots.waterfall(explanation)
 
 

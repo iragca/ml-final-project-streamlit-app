@@ -2,7 +2,7 @@ import shap
 import streamlit as st
 from transformers import BertModel, BertTokenizer
 
-from src.config import X_TRAIN, X_TEST, MODEL
+from src.config import MODEL
 
 
 @st.cache_resource
@@ -17,11 +17,5 @@ def load_bert_model():
 
 @st.cache_resource
 def init_shap():
-    background = shap.sample(X_TRAIN, 100, random_state=0)
-    explainer = shap.KernelExplainer(MODEL.predict, background)
-
-    # Explain a few predictions
-    shap_values = explainer.shap_values(
-        X_TEST[:100]
-    )  # slice to limit compute time
+    explainer = shap.TreeExplainer(MODEL)
     return explainer
