@@ -14,7 +14,7 @@ explainer = init_shap()
 
 
 def main():
-    st.title("Should I be hired by the government? 🇵🇭")
+    st.title("Should I work for the government? 🇵🇭")
     st.divider()
 
     with st.sidebar:
